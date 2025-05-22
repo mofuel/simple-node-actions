@@ -1,5 +1,5 @@
-function add(a, b) {
-    return a + b;
+function add(...numbers) {
+    return numbers.reduce((acc, num) => acc + num, 0);
 }
 
 module.exports = { add };
