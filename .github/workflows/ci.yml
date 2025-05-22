@@ -6,20 +6,30 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
         node-version: 18
 
-    - name: Install dependencies
-      run: npm install
+    - name: Clean and install dependencies
+      run: |
+        rm -rf node_modules package-lock.json
+        npm install
+
+    - name: Check Jest version
+      run: npx jest --version
 
     - name: Run tests
-      run: npm test
+      run: npx jest
